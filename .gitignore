@@ -1,0 +1,18 @@
+# # Data files
+data/
+# # Model weights
+# models/
+# *.pkl
+
+# # Jupyter Notebook checkpoints
+# .ipynb_checkpoints/
+
+# # Logs
+# *.log
+
+# # Virtual environment
+# venv/
+# .env
+
+.DS_Store
+# .gitignore

@@ -1,18 +1,22 @@
 # # Data files
 data/
 # # Model weights
-# models/
-# *.pkl
+models/
+*.pkl
 
 # # Jupyter Notebook checkpoints
 # .ipynb_checkpoints/
 
 # # Logs
-# *.log
-
+*.log
+*.tsv
 # # Virtual environment
 # venv/
 # .env
-
+/wandb
+*.json
+/src/__pycache__/
+*.zip
+*.tfevents
 .DS_Store
-# .gitignore
+.gitignore

@@ -2,6 +2,7 @@
 import os
 import numpy as np
 import pandas as pd
+import wandb
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 from sklearn.impute import KNNImputer
@@ -11,6 +12,7 @@ def load_data(data_dir):
     train = pd.read_csv(os.path.join(data_dir, 'train.csv'))
     test = pd.read_csv(os.path.join(data_dir, 'test.csv'))
     sample_submission = pd.read_csv(os.path.join(data_dir, 'sample_submission.csv'))
+    wandb.log({'train_shape': train.shape, 'test_shape': test.shape})
     return train, test, sample_submission
 
 def process_file(filename, dirname):
@@ -33,7 +35,7 @@ def perform_autoencoder(df, encoding_dim=50, epochs=50, batch_size=32):
     import torch
     import torch.nn as nn
     import torch.optim as optim
-    from src.models import AutoEncoder  # モデル定義をインポート
+    from src.model import AutoEncoder  # モデル定義をインポート
 
     scaler = StandardScaler()
     df_scaled = scaler.fit_transform(df)

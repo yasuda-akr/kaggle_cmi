@@ -1,0 +1,62 @@
+# config/parameters.yaml
+
+seed: 42
+n_splits: 5
+
+lgb_params:
+  learning_rate: 0.046
+  max_depth: 12
+  num_leaves: 478
+  min_data_in_leaf: 13
+  feature_fraction: 0.893
+  bagging_fraction: 0.784
+  bagging_freq: 4
+  lambda_l1: 10
+  lambda_l2: 0.01
+  #device: 'gpu'
+  random_state: 42
+
+
+xgb_params:
+  learning_rate: 0.05
+  max_depth: 6
+  n_estimators: 200
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_alpha: 1
+  reg_lambda: 5
+  random_state: 42
+  tree_method: 'gpu_hist'
+
+
+cat_params:
+  learning_rate: 0.05
+  depth: 6
+  iterations: 200
+  random_seed: 42
+  verbose: 0
+  l2_leaf_reg: 10
+  task_type: 'GPU'
+
+
+tabnet_params:
+  n_d: 64
+  n_a: 64
+  n_steps: 5
+  gamma: 1.5
+  n_independent: 2
+  n_shared: 2
+  lambda_sparse: 1e-4
+  optimizer_fn: 'adam'
+  optimizer_params:
+    lr: 2e-2
+    weight_decay: 1e-5
+  mask_type: 'entmax'
+  scheduler_params:
+    mode: 'min'
+    patience: 10
+    min_lr: 1e-5
+    factor: 0.5
+  scheduler_fn: 'ReduceLROnPlateau'
+  verbose: 1
+  device_name: 'cuda'

@@ -6,19 +6,27 @@ import warnings
 import pandas as pd
 import numpy as np
 
+import wandb
+from omegaconf import OmegaConf
+
 # パスを追加
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.data_preprocessing import load_data, load_time_series, perform_autoencoder, impute_missing_values
 from src.feature_engineering import feature_engineering
-from src.models import train_model
+from src.model import train_model
 
 warnings.filterwarnings('ignore')
 
-SEED = 42
-np.random.seed(SEED)
+
+np.random.seed(42)
 
 def main():
+    # wandb の設定ファイルを読み込み
+    config = OmegaConf.load('config/config.yaml')
+    # wandb の初期化
+    wandb.init(project=config.project_name, entity=config.entity)
+
     data_dir = 'data'
     train, test, sample_submission = load_data(data_dir)
 
@@ -63,6 +71,7 @@ def main():
 
     # 結果の保存
     submission.to_csv('submission.csv', index=False)
+    wandb.save('submission.csv')
     print("トレーニングと予測が完了しました。結果は'submission.csv'に保存されました。")
 
 if __name__ == "__main__":

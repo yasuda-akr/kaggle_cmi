@@ -1,7 +1,7 @@
 # # Data files
 data/
 # # Model weights
-models/
+*.whl
 *.pkl
 
 # # Jupyter Notebook checkpoints

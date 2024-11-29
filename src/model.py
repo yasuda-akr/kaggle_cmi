@@ -1,4 +1,4 @@
-# src/models.py
+# src/model.py
 
 import os
 import numpy as np
@@ -320,5 +320,4 @@ def train_model(train, test, sample_submission, config):
     submission_filename = 'submission.csv'
     submission.to_csv(submission_filename, index=False)
     wandb.save(submission_filename)
-
     return submission

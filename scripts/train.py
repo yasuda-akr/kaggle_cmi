@@ -15,17 +15,27 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.data_preprocessing import load_data, load_time_series, perform_autoencoder, impute_missing_values
 from src.feature_engineering import feature_engineering
 from src.model import train_model
+from src.utils import set_seeds
 
 warnings.filterwarnings('ignore')
 
 
-np.random.seed(42)
-
 def main():
     # wandb の設定ファイルを読み込み
-    config = OmegaConf.load('config/config.yaml')
+    config = OmegaConf.load('config/parameters.yaml')
+    
+
+    # シードの設定
+    set_seeds(config.seed)
+    print(config.project_name)
+    print(config.entity)
     # wandb の初期化
-    wandb.init(project=config.project_name, entity=config.entity)
+    wandb.init(
+        project=config.project_name,
+        config=OmegaConf.to_container(config, resolve=True),
+        name=config.run_name,
+        reinit=True
+    )
 
     data_dir = 'data'
     train, test, sample_submission = load_data(data_dir)
@@ -67,7 +77,7 @@ def main():
         train = train.replace([np.inf, -np.inf], np.nan)
 
     # モデルのトレーニングと予測
-    submission = train_model(train, test, sample_submission)
+    submission = train_model(train, test, sample_submission, config)
 
     # 結果の保存
     submission.to_csv('submission.csv', index=False)

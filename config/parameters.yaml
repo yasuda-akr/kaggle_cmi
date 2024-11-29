@@ -1,4 +1,8 @@
 # config/parameters.yaml
+project_name: 'kaggle_cmi' 
+entity: 'akira-ysd0889' 
+run_name: 'baseline_experiment' 
+
 
 seed: 42
 n_splits: 5
@@ -26,7 +30,7 @@ xgb_params:
   reg_alpha: 1
   reg_lambda: 5
   random_state: 42
-  tree_method: 'gpu_hist'
+  #tree_method: 'gpu_hist'
 
 
 cat_params:
@@ -36,7 +40,7 @@ cat_params:
   random_seed: 42
   verbose: 0
   l2_leaf_reg: 10
-  task_type: 'GPU'
+  #task_type: 'GPU'
 
 
 tabnet_params:

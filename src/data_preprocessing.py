@@ -2,6 +2,7 @@
 import os
 import numpy as np
 import pandas as pd
+import polars as pl
 import wandb
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
@@ -9,14 +10,14 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import StandardScaler
 
 def load_data(data_dir):
-    train = pd.read_csv(os.path.join(data_dir, 'train.csv'))
-    test = pd.read_csv(os.path.join(data_dir, 'test.csv'))
-    sample_submission = pd.read_csv(os.path.join(data_dir, 'sample_submission.csv'))
+    train = pl.read_csv(os.path.join(data_dir, 'train.csv')).to_pandas()
+    test = pl.read_csv(os.path.join(data_dir, 'test.csv')).to_pandas()
+    sample_submission = pl.read_csv(os.path.join(data_dir, 'sample_submission.csv')).to_pandas()
     wandb.log({'train_shape': train.shape, 'test_shape': test.shape})
     return train, test, sample_submission
 
 def process_file(filename, dirname):
-    df = pd.read_parquet(os.path.join(dirname, filename, 'part-0.parquet'))
+    df = pl.read_parquet(os.path.join(dirname, filename, 'part-0.parquet')).to_pandas()
     df.drop('step', axis=1, inplace=True)
     if np.any(np.isinf(df)):
         df = df.replace([np.inf, -np.inf], np.nan)

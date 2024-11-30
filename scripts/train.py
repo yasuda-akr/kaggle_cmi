@@ -61,7 +61,7 @@ def main():
 
     # 欠損値の補完
     train = impute_missing_values(train)
-    test = impute_missing_values(test)
+    #test = impute_missing_values(test)
 
     # 特徴量エンジニアリング
     train = feature_engineering(train)
@@ -139,7 +139,7 @@ def train_and_predict(train, test, sample_submission, config):
             fold_oof_preds += y_val_pred / len(model_list)
 
             # 評価
-            val_kappa = quadratic_weighted_kappa(y_val, y_val_pred.round().astype(int))
+            val_kappa = quadratic_weighted_kappa(y_val, np.round(y_val_pred).astype(int))
 
             # wandb にログ
             wandb.log({
@@ -150,10 +150,10 @@ def train_and_predict(train, test, sample_submission, config):
             test_pred = model.predict(test)
             test_preds[:, fold] += test_pred / len(model_list)
 
-            # モデルの保存
-            model_filename = f'models/{model_name}_fold{fold+1}.pkl'
-            joblib.dump(model, model_filename)
-            wandb.save(model_filename)
+            # モデルの保存を削除
+            # model_filename = f'models/{model_name}_fold{fold+1}.pkl'
+            # joblib.dump(model, model_filename)
+            # wandb.save(model_filename)
 
             trained_models.append((model_name, fold, model))
 

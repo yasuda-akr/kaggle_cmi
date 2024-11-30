@@ -11,17 +11,23 @@ models:
   - 'CatBoost'
   - 'TabNet'
 
+
 lgb_params:
+  objective: 'regression'
   learning_rate: 0.046
   max_depth: 12
   num_leaves: 478
-  min_data_in_leaf: 13
   feature_fraction: 0.893
   bagging_fraction: 0.784
   bagging_freq: 4
-  lambda_l1: 10
-  lambda_l2: 0.01
+  reg_alpha: 10      # lambda_l1 を reg_alpha に変更
+  reg_lambda: 0.01    # lambda_l2 を reg_lambda に変更
   random_state: 42
+  verbose: -1
+  # 他のパラメータはトレーニング API に合わせて追加
+  # 例えば、metric, num_boost_round など
+  metric: 'rmse'
+  num_boost_round: 100
 
 xgb_params:
   learning_rate: 0.05
@@ -49,7 +55,6 @@ tabnet_params:
   n_independent: 2
   n_shared: 2
   lambda_sparse: 1e-4
-  optimizer_fn: 'adam'
   optimizer_params:
     lr: 2e-2
     weight_decay: 1e-5
@@ -59,5 +64,4 @@ tabnet_params:
     patience: 10
     min_lr: 1e-5
     factor: 0.5
-  scheduler_fn: 'ReduceLROnPlateau'
   verbose: 0

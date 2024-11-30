@@ -1,25 +1,23 @@
 # src/models/xgboost_model.py
 from xgboost import XGBRegressor
-import wandb
+from wandb.integration.xgboost import WandbCallback
 from .base import BaseModel
 
 class XGBoostModel(BaseModel):
     def __init__(self, params):
-        self.model = XGBRegressor(**params)
+        self.params = params.copy()
+        self.model = XGBRegressor(**self.params)
 
     def fit(self, X_train, y_train, X_valid=None, y_valid=None):
+        # トレーニング
         self.model.fit(
             X_train, y_train,
-            eval_set=[(X_valid, y_valid)],
+            eval_set=[(X_valid, y_valid)] if X_valid is not None and y_valid is not None else [],
             eval_metric='rmse',
+            callbacks=[WandbCallback(log_model=False)],  # log_model=False に設定
             early_stopping_rounds=50,
             verbose=False
         )
-        # wandbに評価結果をログ
-        evals_result = self.model.evals_result()
-        for metric in evals_result['validation_0']:
-            for i, value in enumerate(evals_result['validation_0'][metric]):
-                wandb.log({f"XGBoost_{metric}": value, 'iteration': i})
         return self
 
     def predict(self, X):

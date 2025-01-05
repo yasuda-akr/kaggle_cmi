@@ -10,29 +10,29 @@ Develop predictive models to identify early signs of problematic internet use (P
 - Quadratic Weighted Kappa (QWK)
 - Score ranges from 0 (random agreement) to 1 (complete agreement)
 
-## Directory Structure
-├── config/
-│   └── parameters.yaml     # Model and training parameters
-├── data/                   # Dataset (gitignored)
-├── models/                 # Trained models (gitignored)
-├── notebooks/             # EDA and experiment notebooks
-├── scripts/
-│   ├── train.py          # Training script
-│   └── evaluate.py       # Evaluation script
-├── src/
-│   ├── data_preprocessing.py  # Data preprocessing
-│   ├── feature_engineering.py # Feature engineering
-│   ├── models/               # Model definitions
-│   │   ├── base.py
-│   │   ├── lightgbm_model.py
-│   │   ├── xgboost_model.py
-│   │   ├── catboost_model.py
-│   │   ├── tabnet_model.py
-│   │   └── ensemble.py
-│   └── utils.py              # Utility functions
-├── requirements.txt
-└── README.md
-Copy
+## Directory Structure　　
+├── config/　　
+│   └── parameters.yaml     # Model and training parameters　　
+├── data/                   # Dataset (gitignored)　　
+├── models/                 # Trained models (gitignored)　　
+├── notebooks/             # EDA and experiment notebooks　　
+├── scripts/　　
+│   ├── train.py          # Training script　　
+│   └── evaluate.py       # Evaluation script　　
+├── src/　　
+│   ├── data_preprocessing.py  # Data preprocessing　　
+│   ├── feature_engineering.py # Feature engineering　　
+│   ├── models/               # Model definitions　　
+│   │   ├── base.py　　
+│   │   ├── lightgbm_model.py　　
+│   │   ├── xgboost_model.py　　
+│   │   ├── catboost_model.py　　
+│   │   ├── tabnet_model.py　　
+│   │   └── ensemble.py　　
+│   └── utils.py              # Utility functions　　
+├── requirements.txt　　
+└── README.md　　
+
 ## Technologies Used
 - Python 3.8+
 - LightGBM
